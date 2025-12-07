@@ -20,7 +20,7 @@ The device is initially in unconfigured mode. You will set it up to connect to y
 
 * Power-on the device, the device will then show a QR Code (For devices with no display, the QR Code will be part of the product packaging)
 
-<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/EchoEarProvisioning.jpeg" width="200" style="display:block">
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/M5StackCoreS3Provisioning.png" width="200" style="display:block">
 
 * In the ESP RainMaker Home app, click on the "+" icon on the top right, and select 'Scan QR Code'. With the phone's camera scan the QR code of the device.
 
@@ -36,42 +36,27 @@ The device is initially in unconfigured mode. You will set it up to connect to y
 
 - Once the device is in configured mode, it connects to your Wi-Fi network.
 
-<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/EchoEarBootUp.jpeg" width="200" style="display:block">
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/M5StackCoreS3BootUp.png" width="200" style="display:block">
 
-* Now you can say "Hi, ESP" to wake the device up.
-You can also wake the device up by gently tapping once on the top of the device.
-* Now you can say "Hi, ESP" to wake the device up. You can also wake the device up by gently tapping once on the top of the device.
-The device will play a chime, indicating it's ready for conversation.
+* Now you can say "Hi, ESP" to wake the device up. The device will play a chime, indicating it's ready for conversation.
 
-* The device is in listening mode when it shows the below icon.
-You may now ask it any questions, and it will respond to you.
 * The device is in listening mode when it shows the below icon. You may now ask it any questions, and it will respond to you.
 
-<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/EchoEarListening.jpeg" width="200" style="display:block">
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/M5StackCoreS3Listening.png" width="200" style="display:block">
 
-* You can see the response on screen (green color).
+- You can see the response on screen(green color).
 
-<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/EchoEarSpeaking.jpeg" width="200" style="display:block">
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/M5StackCoreS3Speaking.png" width="200" style="display:block">
 
-* You can interrupt the agent anytime by touching the top of device.
-* When response playback stops, you can next question.
-* Device goes to sleep after 15 seconds of inactivity, you can wake it again by saying "Hi, ESP".
+- When response playback stops, you can next question.
+- Device goes to sleep after 15 seconds of inactivity, you can wake it again by saying "Hi, ESP".
 
-## Default Agent
-
-The device has a friend-like conversational agent out of the box. It has following capabilities:
-* Having fun conversations
-* Knowing local time at user's location
-* Setting Reminders
-* Adjusting volume of your device
-* Adjusting the emoji on display based on mood of the conversation
-* Control your RainMaker devices
+**Note: The device may not function correctly while on battery power. This is a known issue and we are working on a fix.**
 
 ## Reset to Factory
 
 You can factory reset your device using either of following methods:
-* Touch and hold the top of device for 10 seconds
-* Reflash the firmware using <a href="https://espressif.github.io/esp-launchpad/minimal-launchpad/?flashConfigURL=https://raw.githubusercontent.com/espressif/esp-agents-firmware/refs/heads/main/docs/launchpad/friend/echo_ear.toml" target="_blank">ESP Launchpad</a>
+* Reflash the firmware using <a href="https://espressif.github.io/esp-launchpad/minimal-launchpad/?flashConfigURL=https://raw.githubusercontent.com/espressif/esp-agents-firmware/refs/heads/main/docs/launchpad/friend/m5stack_cores3.toml" target="_blank">ESP Launchpad</a>
 * Goto device settings in ESP RainMaker Home app -> Factory Reset
 
 ## Changing the Agent on the Device
