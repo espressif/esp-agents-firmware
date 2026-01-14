@@ -1,0 +1,128 @@
+{
+    "name": "Matter Controller",
+    "textModelId": "us.anthropic.claude-sonnet-4-20250514-v1:0",
+    "speechModelId": "amazon.nova-sonic-v1:0",
+    "systemPrompt": "Give the user short, precise and correct answers. And use the tools as much as possible. Control standard Matter devices based on conversation context and user intent. Based on the context, infer the user's tendencies and ask confirm.\n",
+    "tools": [
+        {
+            "type": "local",
+            "name": "control_device",
+            "description": "Control other Matter devices from device list based on conversation context and user intent. Note: Results from this tool are time-sensitive and must be called fresh each time. IMPORTANT: When providing command_args, only modify the variable parameter values and maintain other structre and fixed parameters",
+            "inputSchema": {
+                "json": {
+                    "type": "object",
+                    "properties": {
+                        "node_id": {
+                            "type": "string",
+                            "description": "node_id in the device list"
+                        },
+                        "cluster_id": {
+                            "type": "number",
+                            "description": "Cluster ID:\n* OnOff: 6\n* LevelControl: 8\n* ColorControl: 768"
+                        },
+                        "command_id": {
+                            "type": "number",
+                            "description": "Command ID. Only variable fields may change, all other structure and fixed parameters must match exactly.\nSupported commands:\\n\\n**OnOff (6)**\\n- TurnOn: 1, args = {}\\n- TurnOff: 0, args = {}\\n- Toggle: 2, args = {}\\n\\n**LevelControl (8)**\\n- MoveToLevel: 0, args = {\\\"0:U8\\\": <level>, \\\"1:U16\\\": 0, \\\"2:U8\\\": 0, \\\"3:U8\\\": 0}, level range: 0-254\\n\\n**ColorControl (768)**\\n- MoveToHue: 0x0000, args = {\\\"0:U8\\\": <hue>, \\\"1:U16\\\": 0, \\\"2:U16\\\": 0, \\\"3:U8\\\": 0, \\\"4:U8\\\": 0}, hue range: 0-254 (0=Red, 42=Yellow, 85=Green, 127=Cyan, 169=Blue, 212=Purple)\\n- MoveToSaturation: 3, args = {\\\"0:U8\\\": <saturation>, \\\"1:U16\\\": 0, \\\"2:U8\\\": 0, \\\"3:U8\\\": 0}, saturation range: 0-254 (0=No color, 254=Full color)"
+                        },
+                        "command_args": {
+                            "type": "string",
+                            "description": "Args of the command  in JSON object form."
+                        }
+                    },
+                    "required": [
+                        "node_id",
+                        "cluster_id",
+                        "command_id",
+                        "command_args"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "local",
+            "name": "get_device_list",
+            "description": "Get the available Matter Devices in the network (To prevent updates, it should be called again each time)",
+            "inputSchema": {
+                "json": {
+                    "type": "object",
+                    "properties": {},
+                    "required": []
+                }
+            }
+        },
+        {
+            "type": "local",
+            "name": "set_volume",
+            "description": "Set the volume of the device.",
+            "inputSchema": {
+                "json": {
+                    "type": "object",
+                    "properties": {
+                        "volume": {
+                            "type": "number",
+                            "description": "Volume level. 0 to 100"
+                        }
+                    },
+                    "required": [
+                        "volume"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "local",
+            "name": "set_emotion",
+            "description": "Whenever there is a change in tone in the conversation, set a new emotion. Supported emotions: Sad, Happy, Confused, Shocked, Angry, Cry, Wink, Neutral.",
+            "inputSchema": {
+                "json": {
+                    "type": "object",
+                    "properties": {
+                        "emotion_name": {
+                            "type": "string",
+                            "description": "Emotion Name."
+                        }
+                    },
+                    "required": [
+                        "emotion_name"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "local",
+            "name": "set_reminder",
+            "description": "Use this tool to set reminder for a particular task.",
+            "inputSchema": {
+                "json": {
+                    "type": "object",
+                    "properties": {
+                        "task": {
+                            "type": "string",
+                            "description": "The name of the task"
+                        },
+                        "timeout": {
+                            "type": "number",
+                            "description": "The duration (in seconds) after which to remind the user."
+                        }
+                    },
+                    "required": [
+                        "task",
+                        "timeout"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "local",
+            "name": "get_local_time",
+            "description": "Get the local time at user's timezone.",
+            "inputSchema": {
+                "json": {
+                    "type": "object",
+                    "properties": {},
+                    "required": []
+                }
+            }
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+menu "ESP Agent Setup Configuration"
+
+    config AGENT_SETUP_RAINMAKER_DEVICE_NAME
+        string "RainMaker Device Name"
+        default "Espressif AI Agent"
+        help
+            This is the name of the device that will be visible in the RainMaker Phone app.
+
+    config AGENT_SETUP_DEFAULT_AGENT_ID
+        string "Default agent ID"
+        default ""
+        help
+            Default Agent ID
+
+endmenu

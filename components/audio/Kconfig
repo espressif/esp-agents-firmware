@@ -1,0 +1,10 @@
+menu "Audio Config"
+
+    config ENABLE_AEC
+        bool "Enable AEC (Acoustic Echo Cancellation)"
+        default n
+        help
+            Ensure the board supports AEC hardware acceleration.
+
+endmenu
+

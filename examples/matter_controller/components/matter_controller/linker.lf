@@ -1,0 +1,31 @@
+[mapping:espressif__esp_matter]
+archive: libespressif__esp_matter.a
+entries:
+  if ESP_ALLOW_BSS_SEG_EXTERNAL_MEMORY = y:
+    * (extram_bss)
+  else:
+    * (default)
+
+[mapping:client_only_matter_controller]
+archive: libclient_only_matter_controller.a
+entries:
+  if ESP_ALLOW_BSS_SEG_EXTERNAL_MEMORY = y:
+    * (extram_bss)
+  else:
+    * (default)
+
+[mapping:openthread_bss]
+archive: libopenthread.a
+entries:
+  if ESP_ALLOW_BSS_SEG_EXTERNAL_MEMORY = y:
+    * (extram_bss)
+  else:
+    * (default)
+
+[mapping:openthread_br]
+archive: libopenthread_br.a
+entries:
+  if ESP_ALLOW_BSS_SEG_EXTERNAL_MEMORY = y:
+    * (extram_bss)
+  else:
+    * (default)

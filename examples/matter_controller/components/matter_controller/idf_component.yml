@@ -1,0 +1,7 @@
+## IDF Component Manager Manifest File
+dependencies:
+  espressif/esp_matter: "~1.4.0"
+  espressif/esp_rainmaker: "^1.7.6"
+  controller_rest_apis:
+    override_path: controller_rest_apis
+    require: public

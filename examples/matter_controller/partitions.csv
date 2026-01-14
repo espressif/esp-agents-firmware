@@ -1,0 +1,13 @@
+# Name,          Type, SubType,  Offset,  Size,     Flags
+esp_secure_cert, 0x3F, ,         0xD000,  0x2000,   encrypted,
+nvs_key,         data, nvs_keys, 0xF000,  0x1000,   encrypted,
+fctry,           data, nvs,      0x10000, 0x6000,   ,
+nvs,             data, nvs,      ,        0xC000,   ,
+otadata,         data, ota,      ,        0x2000,   ,
+reserved,        data, ,         ,        0x2000,   ,
+phy_init,        data, phy,      ,        0x1000,   ,
+ota_0,           app,  ota_0,    ,        0x5B0000, ,
+ota_1,           app,  ota_1,    ,        0x5B0000, ,
+model,           data, spiffs,   ,        0x140000, ,
+anim_icon,       data, spiffs,   ,        0x280000, ,
+rcp_fw,          data, spiffs,   ,        0xA0000,  ,

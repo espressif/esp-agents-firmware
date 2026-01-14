@@ -1,0 +1,76 @@
+# Setup Guide
+
+Get started by installing the `ESP RainMaker Home` app from the respective stores:
+
+> Note: For the `Matter Controller` example, use the `ESP RainMaker` app instead of the `ESP RainMaker Home` app to do the initial setup of the device. The below phone app images might be different in this case. (We are in the process of adding support for `Matter Controller` in the `ESP RainMaker Home` app too, similar to other examples.)
+
+<div style="display: flex; align-items: center; gap: 12px;">
+  <a href="https://apps.apple.com/in/app/esp-rainmaker-home/id1563728960" target="_blank">
+    <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" width="160">
+  </a>
+
+  <a href="https://play.google.com/store/apps/details?id=com.espressif.novahome" target="_blank">
+    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" width="200">
+  </a>
+</div>
+
+## Configuring the Device
+
+The device is initially in unconfigured mode. You will need to set it up to connect to your home's Wi-Fi network, so you can begin using the device.
+
+* Once you have installed and launched the app, the app will ask for Bluetooth/Location permission. This is necessary for the app to detect the unconfigured device's advertisement data.
+
+* Power-on the device, the device will then show a QR Code (For devices with no display, the QR Code will be part of the product packaging)
+
+* In the ESP RainMaker Home app, click on the "+" icon on the top right, and select 'Scan QR Code'. With the phone's camera scan the QR code of the device.
+
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/AddDevices.jpeg" width="200" style="display:block">
+
+* Once the app detects the device, it will ask for the Wi-Fi network and its passphrase to be programmed in the device
+
+* After the device is configured, the device is ready to be used.
+
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/SelectWiFi.jpeg" width="200" style="display:block">
+
+## Using the Device
+
+* Once the device is in configured mode, it connects to your Wi-Fi network.
+* Now you can say `Hi, ESP` to wake the device up. The device will play a chime, indicating it's ready for conversation. (You can also wake the device up by tapping anywhere on the screen.)
+* The device is in listening mode. You may now ask it any questions, and it will respond to you.
+* You can see the response on screen.
+* You can interrupt the agent anytime by touching the screen.
+* When response playback stops, you can ask your next question.
+* Device goes to sleep after 15 seconds of inactivity, you can wake it again by saying `Hi, ESP`.
+
+## Default Agent
+
+Check the example's README for the default agent and its capabilities. They include:
+
+* Knowing local time at your location
+* Setting Reminders
+* Adjusting volume of your device
+* Updating the emoji on the display based on mood of the conversation
+* Controlling other smart home devices
+
+## Reset to Factory
+
+You can factory reset your device by either of the following methods:
+
+* Touch and hold the top of device for 10 seconds. The screen will indicate that the reset is in has started ad it will ask you to release the touch.
+* Go to device settings in ESP RainMaker Home app -> Factory Reset
+
+## Changing the Agent on the Device
+
+When you create a new agent, in the Agents Dashboard you can click on Share Agent and generate the QR Code.
+
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/ShareAgent.png" width="200" style="display:block">
+
+Now scan the QR Code from your phone's camera app / Google lens. The app will then launch the ESP RainMaker Home app.
+
+The app will ask you to select the device that needs to be configured with this agent, and then it will go ahead and configure that device.
+
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/ShareAgentDevice.jpeg" width="200" style="display:block">
+
+After selecting your device, the app will update the Agent ID on that device.
+
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/ShareAgentSuccess.jpeg" width="200" style="display:block">
