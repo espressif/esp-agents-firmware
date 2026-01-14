@@ -1,0 +1,7 @@
+dependencies:
+  idf:
+    version: '>=5.5'
+
+  espressif/esp_board_manager:
+    version: '^0.4'
+    require: public

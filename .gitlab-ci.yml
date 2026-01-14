@@ -1,0 +1,63 @@
+stages:
+   - build
+
+# Template job for building examples
+.build_template:
+  image: espressif/idf:release-v5.5
+  stage: build
+  tags:
+    - build
+  script:
+    - cd examples/${EXAMPLE_NAME}
+    - idf.py select-board --board ${BOARD_NAME}
+    - idf.py build
+
+# Voice Chat builds
+build_voice_chat_esp_box_3:
+  extends: .build_template
+  variables:
+    EXAMPLE_NAME: voice_chat
+    BOARD_NAME: esp_box_3
+
+build_voice_chat_m5stack_cores3:
+  extends: .build_template
+  variables:
+    EXAMPLE_NAME: voice_chat
+    BOARD_NAME: m5stack_cores3
+
+build_voice_chat_m5stack_cores3_h2_gateway:
+  extends: .build_template
+  variables:
+    EXAMPLE_NAME: voice_chat
+    BOARD_NAME: m5stack_cores3_h2_gateway
+
+build_voice_chat_echoear:
+  extends: .build_template
+  variables:
+    EXAMPLE_NAME: voice_chat
+    BOARD_NAME: echoear_core_board_v1_2
+
+# Matter Controller builds
+build_matter_controller_esp_box_3:
+  extends: .build_template
+  variables:
+    EXAMPLE_NAME: matter_controller
+    BOARD_NAME: esp_box_3
+
+build_matter_controller_m5stack_cores3:
+  extends: .build_template
+  variables:
+    EXAMPLE_NAME: matter_controller
+    BOARD_NAME: m5stack_cores3
+
+build_matter_controller_m5stack_cores3_h2_gateway:
+  extends: .build_template
+  variables:
+    EXAMPLE_NAME: matter_controller
+    BOARD_NAME: m5stack_cores3_h2_gateway
+
+build_matter_controller_echoear:
+  extends: .build_template
+  variables:
+    EXAMPLE_NAME: matter_controller
+    BOARD_NAME: echoear_core_board_v1_2

@@ -1,0 +1,8 @@
+build/
+sdkconfig
+sdkconfig.old
+sdkconfig.backup
+managed_components/
+dependencies.lock
+gen_bmgr_codes/
+.cache/

@@ -1,0 +1,95 @@
+{
+    "name": "Friend",
+    "textModelId": "amazon.nova-lite-v1:0",
+    "speechModelId": "amazon.nova-sonic-v1:0",
+    "systemPrompt": "### Friend\nYou are a Friend.\n\n* Talk in a polite and friendly way to your friends.\n* Give them new ideas and new things to try out every time.\n* Understand their likes and dislikes and respond accordingly.\n* Try to keep the conversation going so that they feel attached to you and talk to you.\n* Ask follow up questions.\n * Whenever there is a change in tone in the conversation, set the new emotion.\n",
+    "toolConfiguration": {
+        "tools": [
+            {
+                "type": "local",
+                "name": "set_volume",
+                "description": "Set the volume of the device.",
+                "inputSchema": {
+                    "json": {
+                        "type": "object",
+                        "properties": {
+                            "volume": {
+                                "type": "number",
+                                "description": "Volume level. 0 to 100"
+                            }
+                        },
+                        "required": [
+                            "volume"
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "local",
+                "name": "set_emotion",
+                "description": "Whenever there is a change in tone in the conversation, set a new emotion. Supported emotions: Sad, Happy, Confused, Shocked, Angry, Cry, Wink, Neutral.",
+                "inputSchema": {
+                    "json": {
+                        "type": "object",
+                        "properties": {
+                            "emotion_name": {
+                                "type": "string",
+                                "description": "Emotion Name."
+                            }
+                        },
+                        "required": [
+                            "emotion_name"
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "local",
+                "name": "set_reminder",
+                "description": "Use this tool to set reminder for a particular task.",
+                "inputSchema": {
+                    "json": {
+                        "type": "object",
+                        "properties": {
+                            "task": {
+                                "type": "string",
+                                "description": "The name of the task"
+                            },
+                            "timeout": {
+                                "type": "number",
+                                "description": "The duration (in seconds) after which to remind the user."
+                            }
+                        },
+                        "required": [
+                            "task",
+                            "timeout"
+                        ]
+                    }
+                }
+            },
+            {
+                "type": "local",
+                "name": "get_local_time",
+                "description": "Get the local time at user's timezone.",
+                "inputSchema": {
+                    "json": {
+                        "type": "object",
+                        "properties": {},
+                        "required": []
+                    }
+                }
+            },
+            {
+                "type": "remote_fetch",
+                "name": "esp_rainmaker",
+                "url": "https://mcp.rainmaker.espressif.com/api/mcp",
+                "connector": {
+                    "authType": "oauth",
+                    "oauth": {
+                        "oauthType": "dynamic"
+                    }
+                }
+            }
+        ]
+    }
+}

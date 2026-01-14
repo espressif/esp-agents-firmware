@@ -1,0 +1,4 @@
+# This is a placeholder file to use the board configuration from `esp_board_manager` component
+
+# use the board configuration for following board name
+bmgr_board_name: m5stack_cores3

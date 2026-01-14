@@ -1,0 +1,26 @@
+menu "ESP Client Only Matter Controller Config"
+
+    config ESP_CLIENT_ONLY_MATTER_CONTROLLER
+        bool "Enable client only matter controller"
+        depends on ESP_MATTER_CONTROLLER_ENABLE
+        depends on !ESP_MATTER_ENABLE_MATTER_SERVER
+        depends on !ESP_MATTER_COMMISSIONER_ENABLE
+        depends on !WIFI_NETWORK_COMMISSIONING_DRIVER
+        depends on !THREAD_NETWORK_COMMISSIONING_DRIVER
+        depends on !ENABLE_CHIPOBLE
+        default n
+        select ENABLE_CHIP_CONTROLLER_BUILD
+        select RMAKER_REST_API_ENABLED
+        help
+            This enables the client only matter controller.
+
+            IMPORTANT: The following configurations must be disabled for this option to be available:
+            - Matter server (ESP_MATTER_ENABLE_MATTER_SERVER)
+            - Matter commissioner (ESP_MATTER_COMMISSIONER_ENABLE)
+            - WiFi network commissioning driver (WIFI_NETWORK_COMMISSIONING_DRIVER)
+            - Thread network commissioning driver (THREAD_NETWORK_COMMISSIONING_DRIVER)
+            - BLE (ENABLE_CHIPOBLE)
+
+            If any of these conditions are not met, this option will not be visible in menuconfig.
+            Please configure them first, then enable this option.
+endmenu

@@ -1,0 +1,47 @@
+menu "App Common Config"
+
+    config APP_EMOTE_PARTITION_LABEL
+        string "Emote Partition Label"
+        default "anim_icon"
+        help
+            This is the partition label for the emote assets.
+
+    config APP_EMOTE_TASK_CORE_ID
+        int "Emote Task Core ID"
+        default 0
+        range 0 1
+        help
+            This is used to pin the gfx emote task to a specific core.
+
+    config APP_AUDIO_DEFAULT_PLAYBACK_VOLUME
+        int "Default Playback Volume"
+        default 75
+        range 0 100
+        help
+            This is the default volume for the playback device.
+
+    config AUDIO_UPLOAD_SAMPLE_RATE
+        int "Upload sample rate"
+        default 8000
+        help
+            Upload sample rate in Hz.
+
+    config AUDIO_DOWNLOAD_SAMPLE_RATE
+        int "Download sample rate"
+        default 16000
+        help
+            Download sample rate in Hz.
+
+    config AUDIO_UPLOAD_FRAME_DURATION_MS
+        int "Upload frame duration"
+        default 20
+        help
+            Upload frame duration in milliseconds.
+
+    config AUDIO_DOWNLOAD_FRAME_DURATION_MS
+        int "Download frame duration"
+        default 60
+        help
+            Download frame duration in milliseconds.
+
+endmenu
