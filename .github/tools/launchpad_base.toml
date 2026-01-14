@@ -1,0 +1,16 @@
+esp_toml_version = 1.0
+
+multipart = true
+chip = "esp32-s3"
+supported_apps = [ "$EXAMPLE_NAME: $BOARD_TITLE" ]
+
+["$EXAMPLE_NAME: $BOARD_TITLE"]
+icon = "https://github.com/espressif/esp-agents-firmware/wiki/images/$BOARD_IMAGE_NAME"
+image.esp32-s3.parts = [
+  "https://$REPO_OWNER.github.io/$REPO_NAME/$EXAMPLE_NAME/$BOARD_NAME/merged.bin",
+]
+image.esp32-s3.addresses = [ "0x0" ]
+readme.text = "https://raw.githubusercontent.com/$REPO_OWNER/$REPO_NAME/refs/heads/main/examples/common/boards/$BOARD_NAME/README.md"
+
+[[portConnectionOptions]]
+console_baudrate = 115200
