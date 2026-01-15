@@ -1,0 +1,136 @@
+# FileCopyrightText: 2026 Espressif Systems (Shanghai) CO LTD
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# This workflow build examples, store the artifacts and deploy them to github pages.
+# Generates the launchpad configuration file that can be used with the url.
+
+name: Publish Examples on Launchpad
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  Build:
+    # Disable the job in forks
+    if: ${{ github.repository_owner == 'espressif' }}
+
+    runs-on: ubuntu-latest
+    container:
+      image: espressif/idf:v5.5.2
+    strategy:
+      matrix:
+        example: [voice_chat, matter_controller]
+        board: [echoear_core_board_v1_2, esp_box_3, m5stack_cores3, m5stack_cores3_h2_gateway]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Examples
+        run: |
+          mkdir -p artifacts/${{ matrix.example }}/${{ matrix.board }}
+
+          . $IDF_PATH/export.sh
+          export REPO_DIR=$PWD
+          cd examples/${{ matrix.example }}
+
+          # Build the application for current board
+          idf.py select-board --board ${{ matrix.board }} build
+
+          # Generate a merged binary to flash
+          idf.py merge-bin -o merged.bin
+          mv build/merged.bin $REPO_DIR/artifacts/${{ matrix.example }}/${{ matrix.board }}/merged.bin
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifact-${{ matrix.example }}-${{ matrix.board }}
+          path: artifacts
+
+  deploy:
+    # Disable the job in forks
+    if: ${{ github.repository_owner == 'espressif' }}
+
+    needs: Build
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        id: checkout
+
+      - name: Download builds
+        uses: actions/download-artifact@v4
+        with:
+          pattern: artifact-*
+          path: artifacts/
+          merge-multiple: true
+
+      - name: Generate launchpad config
+        run: |
+          export REPO_DIR=$PWD
+          export REPO_OWNER=${{ github.repository_owner }}
+          export REPO_NAME=`basename ${{ github.repository }}`
+
+          sudo apt-get update && sudo apt-get install gettext-base jq -y
+
+          # Read board configuration
+          BOARDS_INFO="$REPO_DIR/.github/tools/boards_info.json"
+
+          # Find all artifacts in format: artifacts/example/board.bin
+          find artifacts -name "merged.bin" -type f | while read -r artifact_path; do
+            # Extract example and board name from path: artifacts/example/board.bin
+            EXAMPLE_NAME=$(echo "$artifact_path" | sed 's|artifacts/||' | cut -d'/' -f1)
+            BOARD_NAME=$(echo "$artifact_path" | sed 's|artifacts/||' | cut -d'/' -f2)
+
+            # Look up board info from JSON
+            BOARD_DATA=$(jq -r --arg name "$BOARD_NAME" '.boards[] | select(.name == $name)' "$BOARDS_INFO")
+
+            if [ -n "$BOARD_DATA" ] && [ "$BOARD_DATA" != "null" ]; then
+              BOARD_TITLE=$(echo "$BOARD_DATA" | jq -r '.title')
+              BOARD_IMAGE=$(echo "$BOARD_DATA" | jq -r '.image')
+
+              # Generate launchpad config by substituting variables in template
+              export EXAMPLE_NAME=$EXAMPLE_NAME
+              export BOARD_NAME=$BOARD_NAME
+              export BOARD_TITLE=$BOARD_TITLE
+              export BOARD_IMAGE_NAME=$BOARD_IMAGE
+              envsubst < $REPO_DIR/.github/tools/launchpad_base.toml > $REPO_DIR/artifacts/$EXAMPLE_NAME/${BOARD_NAME}/launchpad.toml
+
+              echo "Generated launchpad config for $EXAMPLE_NAME / $BOARD_NAME"
+              echo "Try out at: https://espressif.github.io/esp-launchpad/minimal-launchpad/?flashConfigURL=https://$REPO_OWNER.github.io/$REPO_NAME/$EXAMPLE_NAME/${BOARD_NAME}/launchpad.toml"
+            else
+              echo "Warning: Board info not found for $BOARD_NAME, skipping..."
+            fi
+          done
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

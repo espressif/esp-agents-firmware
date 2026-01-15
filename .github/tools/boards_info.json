@@ -1,0 +1,24 @@
+{
+  "boards": [
+    {
+      "name": "echoear_core_board_v1_2",
+      "title": "EchoEar v1.2",
+      "image": "EchoEarListening.jpeg"
+    },
+    {
+      "name": "esp_box_3",
+      "title": "ESP-BOX-3",
+      "image": "ESPBox3Listening.png"
+    },
+    {
+      "name": "m5stack_cores3",
+      "title": "M5Stack CoreS3",
+      "image": "M5StackCoreS3Listening.png"
+    },
+    {
+      "name": "m5stack_cores3_h2_gateway",
+      "title": "M5Stack CoreS3 with Gateway H2",
+      "image": "M5StackCoreS3Listening.png"
+    }
+  ]
+}
