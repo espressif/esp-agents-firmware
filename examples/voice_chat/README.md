@@ -59,7 +59,7 @@ idf.py build flash monitor
 
 ### 3. Set up the device
 
-Next is to set up the device. Add the Wi-Fi credentials and finish the agent setup on the device. Refer the [Setup Guide](../../docs/setup_guide.md) for more details.
+Next is to set up the device. Add the Wi-Fi credentials and finish the agent setup on the device. Refer the [Setup Guide](setup_guide.md) for more details.
 
 ## Advanced Configuration
 

@@ -2,8 +2,6 @@
 
 Get started by installing the `ESP RainMaker Home` app from the respective stores:
 
-> Note: For the `Matter Controller` example, use the `ESP RainMaker` app instead of the `ESP RainMaker Home` app to do the initial setup of the device. The below phone app images might be different in this case. (We are in the process of adding support for `Matter Controller` in the `ESP RainMaker Home` app too, similar to other examples.)
-
 <div style="display: flex; align-items: center; gap: 12px;">
   <a href="https://apps.apple.com/in/app/esp-rainmaker-home/id1563728960" target="_blank">
     <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" width="160">
@@ -41,16 +39,6 @@ The device is initially in unconfigured mode. You will need to set it up to conn
 * You can interrupt the agent anytime by touching the screen.
 * When response playback stops, you can ask your next question.
 * Device goes to sleep after 15 seconds of inactivity, you can wake it again by saying `Hi, ESP`.
-
-## Default Agent
-
-Check the example's README for the default agent and its capabilities. They include:
-
-* Knowing local time at your location
-* Setting Reminders
-* Adjusting volume of your device
-* Updating the emoji on the display based on mood of the conversation
-* Controlling other smart home devices
 
 ## Reset to Factory
 
