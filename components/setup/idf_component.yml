@@ -1,6 +1,7 @@
 dependencies:
   espressif/esp_rainmaker:
     version: ^1.8.7
+    require: public
 
   espressif/rmaker_app_network:
     version: ^1.2.0

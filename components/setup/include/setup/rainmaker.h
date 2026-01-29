@@ -7,7 +7,6 @@
 #pragma once
 
 #include <esp_err.h>
-#include <agent_setup.h>
 
 /* @brief Initialize the RainMaker setup
  *
