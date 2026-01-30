@@ -69,6 +69,9 @@ device_data_t g_device_data;
 extern const uint8_t wakeup_mp3_start[] asm("_binary_wakeup_mp3_start");
 extern const uint8_t wakeup_mp3_end[] asm("_binary_wakeup_mp3_end");
 
+extern const uint8_t wakeup_end_mp3_start[] asm("_binary_wakeup_end_mp3_start");
+extern const uint8_t wakeup_end_mp3_end[] asm("_binary_wakeup_end_mp3_end");
+
 extern const uint8_t finish_reminder_mp3_start[] asm("_binary_finish_reminder_mp3_start");
 extern const uint8_t finish_reminder_mp3_end[] asm("_binary_finish_reminder_mp3_end");
 
@@ -258,6 +261,11 @@ void device_process_event(app_device_event_t event, void *data)
             device_set_text(APP_DEVICE_TEXT_TYPE_SYSTEM, "Zzzz...");
             device_perform_action(DEVICE_ACTION_MICROPHONE_STOP);
             device_perform_action(DEVICE_ACTION_SLEEP_TIMER_STOP);
+
+            /* Don't play wakeup_end chime if device is already in idle state */
+            if (g_device_data.state != DEVICE_STATE_IDLE) {
+                app_audio_play_media_async("embed://audio/0_wakeup_end.mp3", wakeup_end_mp3_start, wakeup_end_mp3_end - wakeup_end_mp3_start);
+            }
 
             app_agent_speech_conversation_end();
 
