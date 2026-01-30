@@ -22,6 +22,7 @@ static const char *TAG = "app_device";
 
 #define REMINDER_DISPLAY_TIMEOUT_SECONDS 5
 #define AGENT_SLEEP_TIMEOUT_SECONDS 15
+#define APP_DEVICE_MESSAGE_QUEUE_SIZE 20
 
 typedef enum {
     DEVICE_STATE_IDLE,
@@ -74,13 +75,13 @@ extern const uint8_t finish_reminder_mp3_end[] asm("_binary_finish_reminder_mp3_
 static void device_sleep_timer_callback(void *arg)
 {
     /* AFE doesn't emit wakeup_end event when manually triggered */
-    app_device_event_enqueue(DEVICE_EVENT_SLEEP);
+    app_device_event_enqueue(DEVICE_EVENT_SLEEP, NULL);
     app_audio_trigger_sleep();
 }
 
 static void reminder_complete_timer_callback(void *arg)
 {
-    app_device_event_enqueue(DEVICE_EVENT_REMINDER_COMPLETE);
+    app_device_event_enqueue(DEVICE_EVENT_REMINDER_COMPLETE, NULL);
 }
 
 static void device_set_text(app_device_text_type_t type, const char *text)
@@ -223,7 +224,7 @@ void device_process_event(app_device_event_t event, void *data)
                 app_audio_play_media_async("embed://audio/0_reminder.mp3", finish_reminder_mp3_start, finish_reminder_mp3_end - finish_reminder_mp3_start);
             }
             /* Wakeup event will take care of stopping speaker and turning on microphone*/
-            app_device_event_enqueue(DEVICE_EVENT_WAKEUP);
+            app_device_event_enqueue(DEVICE_EVENT_WAKEUP, NULL);
             break;
 
         case DEVICE_EVENT_WAKEUP:
@@ -266,13 +267,13 @@ void device_process_event(app_device_event_t event, void *data)
 
         case DEVICE_EVENT_INTERRUPT:
             if (g_device_data.state == DEVICE_STATE_LISTENING) {
-                app_device_event_enqueue(DEVICE_EVENT_SLEEP);
+                app_device_event_enqueue(DEVICE_EVENT_SLEEP, NULL);
             } else if (g_device_data.state == DEVICE_STATE_SPEAKING) {
                 device_perform_action(DEVICE_ACTION_SPEAKER_STOP);
-                app_device_event_enqueue(DEVICE_EVENT_SPEECH_END);
+                app_device_event_enqueue(DEVICE_EVENT_SPEECH_END, NULL);
             } else {
                 /* Will wait for current playback to complete and then start the microphone again */
-                app_device_event_enqueue(DEVICE_EVENT_WAKEUP);
+                app_device_event_enqueue(DEVICE_EVENT_WAKEUP, NULL);
             }
             break;
 
@@ -286,7 +287,7 @@ void device_process_event(app_device_event_t event, void *data)
                 device_set_text(APP_DEVICE_TEXT_TYPE_SYSTEM, deivce_get_agent_state_text());
             }
             if (app_agent_get_state() == APP_AGENT_STATE_STARTED && g_device_data.wakeup_start_pending) {
-                app_device_event_enqueue(DEVICE_EVENT_WAKEUP);
+                app_device_event_enqueue(DEVICE_EVENT_WAKEUP, NULL);
                 g_device_data.wakeup_start_pending = false;
             }
             break;
@@ -357,26 +358,39 @@ void device_process_task(void *arg)
     }
 }
 
-esp_err_t app_device_event_enqueue(app_device_event_t event)
+esp_err_t app_device_event_enqueue_internal(app_device_event_t event, device_event_data_t *data, bool is_isr)
 {
+    if (!g_device_data.init_done) {
+        return ESP_ERR_INVALID_STATE;
+    }
+
     device_event_container_t message;
     message.event = event;
     message.has_data = false;
-    return xQueueSend(g_device_data.message_queue, &message, portMAX_DELAY);
-}
 
-esp_err_t app_device_event_enqueue_with_data(app_device_event_t event, device_event_data_t *data)
-{
-    device_event_container_t message;
-    message.event = event;
     if (data) {
         message.data = *data;
         message.has_data = true;
-    } else {
-        message.has_data = false;
     }
-    return xQueueSend(g_device_data.message_queue, &message, portMAX_DELAY);
+
+    if (is_isr) {
+        return xQueueSendFromISR(g_device_data.message_queue, &message, NULL);
+    } else {
+        return xQueueSend(g_device_data.message_queue, &message, portMAX_DELAY);
+    }
 }
+
+esp_err_t app_device_event_enqueue(app_device_event_t event, device_event_data_t *data)
+{
+    return app_device_event_enqueue_internal(event, data, false);
+}
+
+
+esp_err_t app_device_event_enqueue_from_isr(app_device_event_t event, device_event_data_t *data)
+{
+    return app_device_event_enqueue_internal(event, data, true);
+}
+
 
 esp_err_t app_device_init(app_device_config_t *config)
 {
@@ -389,7 +403,7 @@ esp_err_t app_device_init(app_device_config_t *config)
     g_device_data.priv_data = config->priv_data;
 
     g_device_data.state = DEVICE_STATE_IDLE;
-    g_device_data.message_queue = xQueueCreate(10, sizeof(device_event_container_t));
+    g_device_data.message_queue = xQueueCreate(APP_DEVICE_MESSAGE_QUEUE_SIZE, sizeof(device_event_container_t));
     if (g_device_data.message_queue == NULL) {
         ESP_LOGE(TAG, "Failed to create message queue");
         return ESP_ERR_NO_MEM;

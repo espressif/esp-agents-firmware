@@ -30,7 +30,7 @@ static void reminder_timer_callback(void *arg)
 
     device_event_data_t event_data;
     event_data.text = task_copy;
-    app_device_event_enqueue_with_data(DEVICE_EVENT_REMINDER, &event_data);
+    app_device_event_enqueue(DEVICE_EVENT_REMINDER, &event_data);
 
     free(task);
 }

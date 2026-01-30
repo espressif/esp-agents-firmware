@@ -34,7 +34,7 @@ app_agent_data_t g_app_agent_data;
 static inline void app_agent_update_state(app_agent_state_t state)
 {
     g_app_agent_data.state = state;
-    app_device_event_enqueue(DEVICE_EVENT_AGENT_STATE_CHANGED);
+    app_device_event_enqueue(DEVICE_EVENT_AGENT_STATE_CHANGED, NULL);
 }
 
 void app_agent_default_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
@@ -50,15 +50,15 @@ void app_agent_default_event_handler(void *arg, esp_event_base_t event_base, int
             ESP_LOGI(TAG, "Agent Not Connected");
             app_agent_update_state(APP_AGENT_STATE_DISCONNECTED);
             // Stop microphone to prevent sending data while disconnected
-            app_device_event_enqueue(DEVICE_EVENT_SLEEP);
+            app_device_event_enqueue(DEVICE_EVENT_SLEEP, NULL);
             break;
         case ESP_AGENT_EVENT_SPEECH_START:
             ESP_LOGD(TAG, "ESP Agent Received Speech Start");
-            app_device_event_enqueue(DEVICE_EVENT_SPEECH_START);
+            app_device_event_enqueue(DEVICE_EVENT_SPEECH_START, NULL);
             break;
         case ESP_AGENT_EVENT_SPEECH_END:
             ESP_LOGD(TAG, "ESP Agent Received Speech End");
-            app_device_event_enqueue(DEVICE_EVENT_SPEECH_END);
+            app_device_event_enqueue(DEVICE_EVENT_SPEECH_END, NULL);
             break;
         case ESP_AGENT_EVENT_DATA_TYPE_TEXT:
             {
@@ -79,7 +79,7 @@ void app_agent_default_event_handler(void *arg, esp_event_base_t event_base, int
                 }
 
                 device_event_data_t event_data = { .text = text };
-                app_device_event_enqueue_with_data(event, &event_data);
+                app_device_event_enqueue(event, &event_data);
             }
             break;
         case ESP_AGENT_EVENT_DATA_TYPE_SPEECH:
@@ -131,7 +131,7 @@ void app_agent_start_task(void *arg)
     ESP_GOTO_ON_ERROR(app_audio_start(), end, TAG, "Failed to start audio pipeline");
     ESP_GOTO_ON_ERROR(app_agent_connect(), end, TAG, "Failed to start agent");
 
-    app_device_event_enqueue(DEVICE_EVENT_SYSTEM_INITIALIZED);
+    app_device_event_enqueue(DEVICE_EVENT_SYSTEM_INITIALIZED, NULL);
 
 end:
     (void)ret; /* Suppress unused variable warning */
