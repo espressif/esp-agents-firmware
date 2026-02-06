@@ -3,7 +3,7 @@
 This is a firmware that combines voice assistant capabilities with Matter smart home protocol integration. \
 You can control Matter compatible smart home appliances using voice.
 
-**Note**: You need to commission this example using the `ESP RainMaker` app for this to work. (We are in the process of adding support for `Matter Controller` in the `ESP RainMaker Home` app too, similar to other examples.)
+**Note**: You need to commission this example using the `ESP RainMaker` app for this to work. (We are in the process of adding support for `Matter Controller` in the `ESP RainMaker Home` app. Once this is complete, the app can also be used for setup.)
 
 ## Features in the firmware
 
@@ -60,9 +60,9 @@ Replace `<board>` with one of:
 - `m5stack_cores3`
 - `m5stack_cores3_h2_gateway`
 
-#### Running the Matter Controller w/ Thread Border Router
+#### Running the Matter Controller with Thread Border Router
 
-To run the Matter Controller example with Thread Border Router support, use the `M5Stack CoreS3` board paired with the `H2 gateway module` and use the dedicated board configuration:
+To run the Matter Controller example with Thread Border Router support, use either the `M5Stack Thread Border Router` board or the `M5Stack CoreS3` board paired with the `H2 Gateway Module`, along with the dedicated board configuration:
 
 ```bash
 idf.py select-board --board m5stack_cores3_h2_gateway
@@ -76,7 +76,7 @@ idf.py build flash monitor
 
 ### 3. Set up the device
 
-Next is to set up the device. Add the Wi-Fi credentials and finish the agent setup on the device. Refer the [Setup Guide](../../docs/setup_guide.md) for more details.
+Next is to set up the device. Add the Wi-Fi credentials and finish the agent setup on the device. Refer the [Setup Guide](setup_guide.md) for more details.
 
 ## Advanced Configuration
 

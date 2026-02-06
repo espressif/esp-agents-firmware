@@ -16,7 +16,7 @@ Default Agent: `friend`
 
 ### Matter Controller (`examples/matter_controller/`): Matter Controller + Thread Border Router Firmware
 
-This firmware supports Matter Controller functionality and Thread Border Router functionality, apart from the common Agents functionality that is described above. It supports tools like get_device_list, set_volume, set_emotion, set_reminder, get_local_time. You may refer [this](docs/firmwares/matter_controller.md) for more details. Users can control other compatible Matter devices using natural voice commands
+This firmware supports Matter Controller functionality and Thread Border Router functionality, apart from the common Agents functionality that is described above. It supports tools like get_device_list, set_volume, set_emotion, set_reminder, get_local_time. You may refer [this](examples/matter_controller/README.md) for more details. Users can control other compatible Matter devices using natural voice commands
 
 Default Agent: `matter_controller`
 
@@ -27,7 +27,7 @@ The examples support the following boards out of the box:
 1. **EchoEar Core Board v1.2**
 2. **ESP-BOX-3**
 3. **M5Stack-CoreS3**
-4. **M5Stack-CoreS3 + M5Stack Module Gateway H2** (with H2 Module for Thread Border Router functionality)
+4. **M5Stack Thread Border Router(M5Stack-CoreS3 + M5Stack Module Gateway H2)** (with H2 Module for Thread Border Router functionality)
 
 ## Try Now
 
@@ -37,13 +37,24 @@ Or, the fastest way to try out ESP Private Agents firmware is to flash the examp
 
 ### Pre-built Images
 
-Flash the examples using ESP Launchpad from the links below and then refer the [Setup Guide](docs/setup_guide.md) for the next steps.
+Flash the examples using ESP Launchpad from the links below and then refer the setup guide in the respective examples for the next steps.
 
 <table>
   <tr>
-    <th align="center">Device</th>
-    <th align="center">Agent: Friend <br> (Based on the Voice Chat Example)</th>
-    <th align="center">Agent: Matter Controller <br> (Based on the Matter Controller Example)</th>
+    <th align="center">Agent</th>
+    <th align="center">Friend <br> (Based on <a href="examples/voice_chat/" target="_blank">voice_chat</a> example)</th>
+    <th align="center">Matter Controller <br> (Based on <a href="examples/matter_controller/" target="_blank">matter_controller</a> example)</th>
+  </tr>
+  <tr>
+    <td align="center">
+      Setup Guide
+    </td>
+    <td align="center">
+      <a href="examples/voice_chat/setup_guide.md" target="_blank">Setup Guide</a>
+    </td>
+    <td align="center">
+      <a href="examples/matter_controller/setup_guide.md" target="_blank">Setup Guide</a>
+    </td>
   </tr>
   <tr>
     <td align="center">
