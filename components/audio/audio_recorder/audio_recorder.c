@@ -167,9 +167,9 @@ static esp_gmf_err_t pipeline_setup_elements(esp_gmf_pipeline_handle_t pipeline_
     }
 
     esp_gmf_info_sound_t in_info = {
-        .sample_rates = 16000,
+        .sample_rates = recorder->sample_rate,
         .bits = 16,
-        .channels = 1,
+        .channels = 2,
     };
     esp_gmf_pipeline_report_info(pipeline_handle, ESP_GMF_INFO_SOUND, &in_info, sizeof(in_info));
 
