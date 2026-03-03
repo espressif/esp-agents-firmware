@@ -24,7 +24,7 @@ static void touch_press_timeout_cb(void *arg)
     ESP_LOGW(TAG, "Touch held for %llu ms, enqueue factory reset",
              (unsigned long long)(TOUCH_LONG_PRESS_DURATION_US / 1000ULL));
     s_factory_reset_triggered = true;
-    app_device_event_enqueue(DEVICE_EVENT_FACTORY_RESET);
+    app_device_event_enqueue(DEVICE_EVENT_FACTORY_RESET, NULL);
 }
 
 esp_err_t app_touch_press_init(void)
@@ -41,7 +41,7 @@ esp_err_t app_touch_press_init(void)
     };
     ESP_RETURN_ON_ERROR(esp_timer_create(&timer_args, &s_touch_press_timer), TAG,
                         "Failed to create touch press timer");
-    
+
     return ESP_OK;
 }
 
@@ -62,7 +62,7 @@ bool app_touch_press_on_inactive(void)
     }
 
     if (!s_factory_reset_triggered) {
-        app_device_event_enqueue(DEVICE_EVENT_INTERRUPT);
+        app_device_event_enqueue_from_isr(DEVICE_EVENT_INTERRUPT, NULL);
     } else {
         agent_setup_factory_reset();
     }

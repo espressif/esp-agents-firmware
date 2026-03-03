@@ -81,6 +81,17 @@ static void change_emotion_visibility(emote_handle_t emote_handle, bool visible)
     }
 }
 
+static void change_qrcode_visibility(emote_handle_t emote_handle, bool visible)
+{
+    if (!emote_handle) {
+        return;
+    }
+    gfx_obj_t *obj = emote_get_obj_by_name(emote_handle, "qrcode");
+    if (obj) {
+        gfx_obj_set_visible(obj, visible);
+    }
+}
+
 #if LEDC_BACKLIGHT_SUPPORTED
 
 #include <dev_ledc_ctrl.h>
@@ -223,7 +234,8 @@ esp_err_t app_display_set_emotion(const char *emotion)
 
 static void display_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
 {
-    ESP_LOGI(TAG, "display_event_handler: event_base: %d, event_id: %d", event_base, event_id);
+    ESP_LOGD(TAG, "display_event_handler: event_base: %d, event_id: %d", event_base, event_id);
+
     if (event_base == APP_NETWORK_EVENT && event_id == APP_NETWORK_EVENT_QR_DISPLAY) {
         char *text = (char *)event_data;
         ESP_LOGI(TAG, "Provisioning QR Data: %s", text);
@@ -231,12 +243,12 @@ static void display_event_handler(void *arg, esp_event_base_t event_base, int32_
         app_display_set_text(APP_DEVICE_TEXT_TYPE_SYSTEM, "Scan QR code with RainMaker", NULL);
         change_emotion_visibility(s_display_data.emote_handle, false);
         emote_set_qrcode_data(s_display_data.emote_handle, text);
+
         esp_event_handler_unregister(APP_NETWORK_EVENT, APP_NETWORK_EVENT_QR_DISPLAY, display_event_handler);
-    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_CONNECTED) {
-        app_display_set_text(APP_DEVICE_TEXT_TYPE_SYSTEM, "WiFi connected", NULL);
-        app_display_set_emotion(DISP_EMOTE_IDLE);
-    } else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
-        app_display_set_text(APP_DEVICE_TEXT_TYPE_SYSTEM, "WiFi connecting...", NULL);
+    } else if (event_base == WIFI_EVENT &&
+        (event_id == WIFI_EVENT_STA_CONNECTED || event_id == WIFI_EVENT_STA_DISCONNECTED)) {
+
+        change_qrcode_visibility(s_display_data.emote_handle, false);
         app_display_set_emotion(DISP_EMOTE_IDLE);
     }
 }
@@ -403,6 +415,7 @@ esp_err_t app_display_init()
     }
 
     esp_event_handler_register(APP_NETWORK_EVENT, APP_NETWORK_EVENT_QR_DISPLAY, display_event_handler, NULL);
+    esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, display_event_handler, NULL);
 
     s_display_data.initialized = true;
     app_display_set_emotion(DISP_EMOTE_IDLE);

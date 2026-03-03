@@ -12,9 +12,12 @@
 #include <audio_playback.h>
 
 typedef enum {
+    /* This should be the first variant of the enum
+     * as the default state of microphone should be stopped
+     * Microphone will be turned on when appropriate by app_device */
+    MICROPHONE_STATE_STOP,
     MICROPHONE_STATE_START,
     MICROPHONE_STATE_PAUSE,
-    MICROPHONE_STATE_STOP,
     MICROPHONE_STATE_MAX,
 } app_audio_microphone_state_t;
 

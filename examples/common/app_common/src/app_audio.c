@@ -150,10 +150,10 @@ static void audio_recorder_event_handler(audio_recorder_handle_t handle, audio_r
 {
     switch (event) {
         case AUDIO_RECORDER_EVENT_WAKEUP_START:
-            app_device_event_enqueue(DEVICE_EVENT_WAKEUP);
+            app_device_event_enqueue(DEVICE_EVENT_WAKEUP, NULL);
             break;
         case AUDIO_RECORDER_EVENT_WAKEUP_END:
-            app_device_event_enqueue(DEVICE_EVENT_SLEEP);
+            app_device_event_enqueue(DEVICE_EVENT_SLEEP, NULL);
             break;
         default:
             break;
@@ -188,7 +188,7 @@ static void audio_microphone_task(void *arg)
 
         if (err != ESP_OK) {
             ESP_LOGW(TAG, "Failed to send speech data: %s", esp_err_to_name(err));
-            app_device_event_enqueue(DEVICE_EVENT_SLEEP);
+            app_device_event_enqueue(DEVICE_EVENT_SLEEP, NULL);
         }
     }
 
@@ -306,7 +306,7 @@ void download_complete_task(void *arg)
 
         ESP_LOGI(TAG, "Speaker playback complete");
         g_app_audio_data.audio_playback_complete = true;
-        app_device_event_enqueue(DEVICE_EVENT_SPEECH_PLAYBACK_COMPLETE);
+        app_device_event_enqueue(DEVICE_EVENT_SPEECH_PLAYBACK_COMPLETE, NULL);
     }
 
     vTaskDelete(NULL);

@@ -55,6 +55,21 @@ typedef struct {
 } app_device_config_t;
 
 /* Event enqueue functions */
-esp_err_t app_device_event_enqueue(app_device_event_t event);
-esp_err_t app_device_event_enqueue_with_data(app_device_event_t event, device_event_data_t *data);
+
+/** @brief Enqueue an event to the device event queue (task context)
+ * @param event The event to enqueue
+ * @param data Optional event data, or NULL
+ * @note This function will block for portMAX_DELAY if the queue is full
+ * @return ESP_OK if the event was enqueued successfully, otherwise an error code
+ */
+esp_err_t app_device_event_enqueue(app_device_event_t event, device_event_data_t *data);
+
+/** @brief Enqueue an event to the device event queue (ISR context)
+ * @param event The event to enqueue
+ * @param data Optional event data, or NULL
+ * @note This function will not block and will return immediately if the queue is full
+ * @return ESP_OK if the event was enqueued successfully, otherwise an error code
+ */
+esp_err_t app_device_event_enqueue_from_isr(app_device_event_t event, device_event_data_t *data);
+
 esp_err_t app_device_init(app_device_config_t *config);
