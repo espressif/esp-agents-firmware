@@ -55,9 +55,10 @@ The device is initially in unconfigured mode. You will need to set it up to conn
 ## Reset to Factory
 
 You can factory reset your device using either of the following methods:
+
 * Touch and hold the top of device for 10 seconds. The change in displayed emotion will indicate that the reset is in progress.
 * Touch and hold the on screen for 10 seconds. The change in displayed emotion will indicate that the reset is in progress.
-* Reflash the firmware using <a href="https://espressif.github.io/esp-launchpad/minimal-launchpad/?flashConfigURL=https://raw.githubusercontent.com/espressif/esp-agents-firmware/refs/heads/main/docs/launchpad/friend/echo_ear.toml" target="_blank">ESP Launchpad</a>
+* Reflash the firmware using ESP Launchpad.
 * Go to device settings in ESP RainMaker Home app -> Factory Reset
 
 ## Changing the Agent on the Device
