@@ -31,11 +31,11 @@ build_voice_chat_m5stack_cores3_h2_gateway:
     EXAMPLE_NAME: voice_chat
     BOARD_NAME: m5stack_cores3_h2_gateway
 
-build_voice_chat_echoear:
+build_voice_chat_esp_vocat:
   extends: .build_template
   variables:
     EXAMPLE_NAME: voice_chat
-    BOARD_NAME: echoear_core_board_v1_2
+    BOARD_NAME: esp_vocat_board_v1_2
 
 # Matter Controller builds
 build_matter_controller_esp_box_3:
@@ -56,8 +56,8 @@ build_matter_controller_m5stack_cores3_h2_gateway:
     EXAMPLE_NAME: matter_controller
     BOARD_NAME: m5stack_cores3_h2_gateway
 
-build_matter_controller_echoear:
+build_matter_controller_esp_vocat:
   extends: .build_template
   variables:
     EXAMPLE_NAME: matter_controller
-    BOARD_NAME: echoear_core_board_v1_2
+    BOARD_NAME: esp_vocat_board_v1_2

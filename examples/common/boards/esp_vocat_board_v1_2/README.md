@@ -20,7 +20,7 @@ The device is initially in unconfigured mode. You will need to set it up to conn
 
 * Power-on the device, the device will then show a QR Code (For devices with no display, the QR Code will be part of the product packaging)
 
-<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/EchoEarProvisioning.jpeg" width="200" style="display:block">
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/ESPVoCatProvisioning.jpeg" width="200" style="display:block">
 
 * In the ESP RainMaker Home app, click on the "+" icon on the top right, and select 'Scan QR Code'. With the phone's camera scan the QR code of the device.
 
@@ -36,17 +36,17 @@ The device is initially in unconfigured mode. You will need to set it up to conn
 
 - Once the device is in configured mode, it connects to your Wi-Fi network.
 
-<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/EchoEarBootUp.jpeg" width="200" style="display:block">
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/ESPVoCatBootUp.jpeg" width="200" style="display:block">
 
 * Now you can say "Hi, ESP" to wake the device up. You can also wake the device up by gently tapping once on the top of the device. The device will play a chime, indicating it's ready for conversation.
 
 * The device is in listening mode when it shows the below icon. You may now ask it any questions, and it will respond to you.
 
-<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/EchoEarListening.jpeg" width="200" style="display:block">
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/ESPVoCatListening.jpeg" width="200" style="display:block">
 
 * You can see the response on screen.
 
-<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/EchoEarSpeaking.jpeg" width="200" style="display:block">
+<img src="https://github.com/espressif/esp-agents-firmware/wiki/images/ESPVoCatSpeaking.jpeg" width="200" style="display:block">
 
 * You can interrupt the agent anytime by briefly tapping on the top of device or on the screen.
 * When response playback stops, you can ask your next question.
