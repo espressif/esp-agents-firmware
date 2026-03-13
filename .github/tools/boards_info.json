@@ -1,9 +1,9 @@
 {
   "boards": [
     {
-      "name": "echoear_core_board_v1_2",
-      "title": "EchoEar v1.2",
-      "image": "EchoEarListening.jpeg"
+      "name": "esp_vocat_board_v1_2",
+      "title": "ESP-VoCat v1.2",
+      "image": "ESPVoCatListening.jpeg"
     },
     {
       "name": "esp_box_3",

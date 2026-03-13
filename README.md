@@ -24,7 +24,7 @@ Default Agent: `matter_controller`
 
 The examples support the following boards out of the box:
 
-1. **EchoEar Core Board v1.2**
+1. **ESP-VoCat Core Board v1.2**
 2. **ESP-BOX-3**
 3. **M5Stack-CoreS3**
 4. **M5Stack Thread Border Router(M5Stack-CoreS3 + M5Stack Module Gateway H2)** (with H2 Module for Thread Border Router functionality)
@@ -58,14 +58,14 @@ Flash the examples using ESP Launchpad from the links below and then refer the s
   </tr>
   <tr>
     <td align="center">
-      <img src="https://github.com/espressif/esp-agents-firmware/wiki/images/EchoEarListening.jpeg" alt="EchoEar" width="100"><br>
-      EchoEar
+      <img src="https://github.com/espressif/esp-agents-firmware/wiki/images/ESPVoCatListening.jpeg" alt="ESP-VoCat" width="100"><br>
+      ESP-VoCat
     </td>
     <td align="center">
-      <a href="https://espressif.github.io/esp-launchpad/minimal-launchpad/?flashConfigURL=https://espressif.github.io/esp-agents-firmware/voice_chat/echoear_core_board_v1_2/launchpad.toml" target="_blank">Flash Now</a>
+      <a href="https://espressif.github.io/esp-launchpad/minimal-launchpad/?flashConfigURL=https://espressif.github.io/esp-agents-firmware/voice_chat/esp_vocat_board_v1_2/launchpad.toml" target="_blank">Flash Now</a>
     </td>
     <td align="center">
-      <a href="https://espressif.github.io/esp-launchpad/minimal-launchpad/?flashConfigURL=https://espressif.github.io/esp-agents-firmware/matter_controller/echoear_core_board_v1_2/launchpad.toml" target="_blank">Flash Now</a>
+      <a href="https://espressif.github.io/esp-launchpad/minimal-launchpad/?flashConfigURL=https://espressif.github.io/esp-agents-firmware/matter_controller/esp_vocat_board_v1_2/launchpad.toml" target="_blank">Flash Now</a>
     </td>
   </tr>
   <tr>

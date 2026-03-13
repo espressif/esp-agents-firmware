@@ -2,7 +2,7 @@ idf_component_register()
 
 # Build the partition for animation and icon image files
 set(ASSETS_NAME "asset_test")
-if(CONFIG_BOARD_ECHOEAR_CORE_BOARD_V1_2)
+if(CONFIG_BOARD_ESP_VOCAT_BOARD_V1_2)
     set(RESOLUTION "360_360")
 elseif(CONFIG_BOARD_M5STACK_CORES3 OR CONFIG_BOARD_ESP_BOX_3)
     set(RESOLUTION "320_240")

@@ -262,7 +262,7 @@ def action_extensions(base_actions: dict, project_path: str) -> dict:
     select_board_options = [
         {
             "names": ["--board", "-b"],
-            "help": "Name of the board (e.g., echoear_core_board_v1_2)",
+            "help": "Name of the board (e.g., esp_vocat_board_v1_2)",
             "type": BoardChoice(available_boards, case_sensitive=False),
             "required": False,
         },

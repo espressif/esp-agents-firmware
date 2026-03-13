@@ -46,7 +46,7 @@ idf.py select-board --board <board>
 
 Replace `<board>` with one of:
 
-- `echoear_core_board_v1_2`
+- `esp_vocat_board_v1_2`
 - `esp_box_3`
 - `m5stack_cores3`
 <!-- - `m5stack_cores3_h2_gateway` -->
