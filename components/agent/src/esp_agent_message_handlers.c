@@ -270,7 +270,7 @@ esp_err_t esp_agent_message_tool_request_handler(esp_agent_handle_t handle, cJSO
             parameters[i].type = ESP_AGENT_PARAM_TYPE_STRING;
             parameters[i].value.s = strdup(cJSON_GetStringValue(value));
         } else if (cJSON_IsNumber(value)) {
-            parameters[i].type = ESP_AGENT_PARAM_TYPE_INT;
+            parameters[i].type = ESP_AGENT_PARAM_TYPE_NUMBER;
             parameters[i].value.i = cJSON_GetNumberValue(value);
         } else if (cJSON_IsBool(value)) {
             parameters[i].type = ESP_AGENT_PARAM_TYPE_BOOL;

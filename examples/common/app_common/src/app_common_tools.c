@@ -48,7 +48,7 @@ esp_err_t app_common_tools_set_reminder_handler(esp_agent_handle_t handle, const
     for (size_t i = 0; i < num_params; i++) {
         if (strcmp(params[i].name, "task") == 0 && params[i].type == ESP_AGENT_PARAM_TYPE_STRING) {
             task = params[i].value.s;
-        } else if (strcmp(params[i].name, "timeout") == 0 && params[i].type == ESP_AGENT_PARAM_TYPE_INT) {
+        } else if (strcmp(params[i].name, "timeout") == 0 && params[i].type == ESP_AGENT_PARAM_TYPE_NUMBER) {
             timeout = params[i].value.i;
         }
     }
@@ -139,7 +139,7 @@ esp_err_t app_common_tools_set_volume_handler(esp_agent_handle_t handle, const c
     int volume = -1;
     esp_err_t err = ESP_OK;
     for (size_t i = 0; i < num_params; i++) {
-        if (strncmp(params[i].name, "volume", strlen("volume")) == 0 && params[i].type == ESP_AGENT_PARAM_TYPE_INT) {
+        if (strncmp(params[i].name, "volume", strlen("volume")) == 0 && params[i].type == ESP_AGENT_PARAM_TYPE_NUMBER) {
             volume = params[i].value.i;
         }
     }

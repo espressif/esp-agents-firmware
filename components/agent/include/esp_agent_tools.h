@@ -20,10 +20,10 @@ extern "C" {
 #endif
 
 /**
- * @brief Currently only supporting int, string and bool
+ * @brief Currently only supporting number, string and bool
  */
 typedef enum {
-    ESP_AGENT_PARAM_TYPE_INT,
+    ESP_AGENT_PARAM_TYPE_NUMBER,
     ESP_AGENT_PARAM_TYPE_STRING,
     ESP_AGENT_PARAM_TYPE_BOOL,
     ESP_AGENT_PARAM_TYPE_MAX,
@@ -33,7 +33,7 @@ typedef enum {
  * @brief Value for the function call
  */
 typedef union {
-    int i;
+    double i;
     const char *s;
     bool b;
 } esp_agent_tool_param_value_t;
