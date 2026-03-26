@@ -50,9 +50,9 @@ static esp_err_t app_tools_control_device_handler(esp_agent_handle_t handle, con
     for (size_t i = 0; i < num_params; i++) {
         if (strcmp(params[i].name, "node_id") == 0 && params[i].type == ESP_AGENT_PARAM_TYPE_STRING) {
             node_id = params[i].value.s;
-        } else if (strcmp(params[i].name, "cluster_id") == 0 && params[i].type == ESP_AGENT_PARAM_TYPE_INT) {
+        } else if (strcmp(params[i].name, "cluster_id") == 0 && params[i].type == ESP_AGENT_PARAM_TYPE_NUMBER) {
             cluster_id = params[i].value.i;
-        } else if (strcmp(params[i].name, "command_id") == 0 && params[i].type == ESP_AGENT_PARAM_TYPE_INT) {
+        } else if (strcmp(params[i].name, "command_id") == 0 && params[i].type == ESP_AGENT_PARAM_TYPE_NUMBER) {
             command_id = params[i].value.i;
         } else if (strcmp(params[i].name, "command_args") == 0 && params[i].type == ESP_AGENT_PARAM_TYPE_STRING) {
             command_params_json = params[i].value.s;
