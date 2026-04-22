@@ -100,6 +100,21 @@ esp_err_t esp_agent_start(esp_agent_handle_t handle, const char *conversation_id
 esp_err_t esp_agent_stop(esp_agent_handle_t handle);
 
 /**
+ * @brief Restarts the conversation by disconnecting, clearing the stored
+ *        conversation ID, and reconnecting. The server will assign a new
+ *        conversation ID on reconnect.
+ *
+ * @note The agent must be started before calling this function.
+ *       The existing DISCONNECTED and START events will fire as normal.
+ *
+ * @param[in] handle Agent handle obtained from esp_agent_init
+ * @return ESP_OK on success, ESP_ERR_INVALID_ARG if handle is NULL,
+ *         ESP_ERR_INVALID_STATE if agent is not started, or error from
+ *         stop/start operations.
+ */
+esp_err_t esp_agent_new_conversation(esp_agent_handle_t handle);
+
+/**
  * @brief Sets the agent ID for the agent.
  *
  * @note If the agent is currently started, it will be stopped and restarted
