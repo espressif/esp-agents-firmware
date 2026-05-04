@@ -116,12 +116,6 @@ esp_err_t esp_agent_auth_get_access_token(const char *refresh_token, char **acce
     int content_length = esp_http_client_fetch_headers(client);
     int status_code = esp_http_client_get_status_code(client);
 
-    if (status_code != 200) {
-        ESP_LOGE(TAG, "HTTP request failed with status %d", status_code);
-        err = ESP_ERR_INVALID_RESPONSE;
-        goto end;
-    }
-
     if (content_length <= 0) {
         ESP_LOGE(TAG, "Invalid or missing Content-Length: %d", content_length);
         err = ESP_ERR_INVALID_RESPONSE;
@@ -144,6 +138,12 @@ esp_err_t esp_agent_auth_get_access_token(const char *refresh_token, char **acce
 
     response_buffer[content_length] = '\0';
     ESP_LOGD(TAG, "Response content: %s", response_buffer);
+
+    if (status_code != 200) {
+        ESP_LOGE(TAG, "HTTP request failed with status %d\nServer response: %s", status_code, response_buffer);
+        err = ESP_ERR_INVALID_RESPONSE;
+        goto end;
+    }
 
     json = cJSON_Parse(response_buffer);
     if (json == NULL) {

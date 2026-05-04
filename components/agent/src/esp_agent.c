@@ -375,6 +375,31 @@ esp_err_t esp_agent_set_refresh_token(esp_agent_handle_t handle, const char *ref
     return ESP_OK;
 }
 
+esp_err_t esp_agent_new_conversation(esp_agent_handle_t handle)
+{
+    ESP_RETURN_ON_FALSE(handle != NULL, ESP_ERR_INVALID_ARG, TAG, "handle is NULL");
+
+    esp_agent_t *agent = (esp_agent_t *)handle;
+
+    ESP_RETURN_ON_FALSE(agent->started, ESP_ERR_INVALID_STATE, TAG, "agent is not started");
+
+    esp_err_t err = esp_agent_stop(handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to stop agent during new conversation: %x", err);
+        return err;
+    }
+
+    free(agent->conversation_id);
+    agent->conversation_id = NULL;
+
+    err = esp_agent_start(handle, NULL);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Failed to restart agent after new conversation: %x", err);
+    }
+
+    return err;
+}
+
 char *esp_agents_get_api_endpoint(void)
 {
     if (!ESP_AGENT_API_ENDPOINT) {

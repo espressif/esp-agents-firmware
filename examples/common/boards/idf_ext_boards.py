@@ -61,10 +61,14 @@ def _write_board_name_file(board_name: str, output_file: Path) -> None:
         raise click.ClickException(f"Failed to write board path file: {e}")
 
 
-def _ensure_bmgr_script_exists(bmgr_script_path: Path, project_dir: Path) -> None:
-    """Ensure the board manager script exists, initializing if necessary."""
+def _ensure_bmgr_script_exists(bmgr_script_path: Path, project_dir: Path) -> bool:
+    """Ensure the board manager script exists, initializing if necessary.
+
+    Returns True if `idf.py reconfigure` was triggered to install
+    managed_components, False if the script was already present.
+    """
     if bmgr_script_path.exists():
-        return
+        return False
 
     # Try to initialize by running reconfigure
     click.echo("ESP Board Manager not found. Running `idf.py reconfigure` to initialize...")
@@ -85,6 +89,8 @@ def _ensure_bmgr_script_exists(bmgr_script_path: Path, project_dir: Path) -> Non
             f"gen_bmgr_config_codes.py not found: {bmgr_script_path}. "
             "Please ensure ESP Board Manager component is properly installed."
         )
+
+    return True
 
 
 def _find_yaml_file(board_path: Path, base_name: str) -> Path | None:
@@ -217,6 +223,7 @@ def action_extensions(base_actions: dict, project_path: str) -> dict:
         project_dir = Path(project_path)
         gen_bmgr_codes_dir = project_dir / "components" / "gen_bmgr_codes"
         agent_board_name_file = gen_bmgr_codes_dir / BOARD_NAME_FILE
+        sdkconfig_file = project_dir / "sdkconfig"
         bmgr_script_path = (
             project_dir / "managed_components" / BMGR_COMPONENT / BMGR_SCRIPT
         )
@@ -227,8 +234,16 @@ def action_extensions(base_actions: dict, project_path: str) -> dict:
         # Write board path file
         _write_board_name_file(board_name, agent_board_name_file)
 
+        # If we have to install managed_components via `idf.py reconfigure` (next
+        # step), it will create sdkconfig from SDKCONFIG_DEFAULTS BEFORE the
+        # bmgr script generates board_manager.defaults. The board's
+        # CONFIG_ESP_BOARD_*_SUPPORT flags would then be missing from sdkconfig
+        # and the build would silently skip the corresponding peripherals/devices.
+        # Track whether we need to redo sdkconfig after the bmgr script runs.
+        sdkconfig_existed_before = sdkconfig_file.exists()
+
         # Ensure board manager script exists
-        _ensure_bmgr_script_exists(bmgr_script_path, project_dir)
+        ran_reconfigure = _ensure_bmgr_script_exists(bmgr_script_path, project_dir)
 
         # Check if board is from ESP Board Manager or custom
         use_from_bmgr_file = board_path / USE_FROM_BMGR_FILE
@@ -251,6 +266,12 @@ def action_extensions(base_actions: dict, project_path: str) -> dict:
 
         # Save the board path file again because the folder contents are deleted by bmgr script.
         _write_board_name_file(board_name, agent_board_name_file)
+
+        # If the inner reconfigure created sdkconfig before board_manager.defaults
+        # existed, regenerate sdkconfig now so the board's defaults are applied.
+        # We only do this if we created sdkconfig in this call.
+        if ran_reconfigure and not sdkconfig_existed_before and sdkconfig_file.exists():
+            sdkconfig_file.unlink()
 
         click.secho(f"Successfully selected board: {board_name}", fg="green")
 

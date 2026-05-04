@@ -228,7 +228,7 @@ esp_err_t agent_setup_init()
 
     /* Initialize network connection + provisioning */
     app_network_init();
-    app_network_set_custom_mfg_data(MGF_DATA_DEVICE_TYPE_USER_AUTH, MFG_DATA_DEVICE_SUBTYPE_AI_AGENT);
+    app_network_set_custom_mfg_data(MFG_DATA_DEVICE_TYPE_USER_AUTH, MFG_DATA_DEVICE_SUBTYPE_AI_AGENT);
 
     /** TODO: Change this */
     xTaskCreate(start_task, "start_task", 4*1024, NULL, 5, NULL);
