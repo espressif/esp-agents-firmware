@@ -3,7 +3,7 @@ stages:
 
 # Template job for building examples
 .build_template:
-  image: espressif/idf:release-v5.5
+  image: espressif/idf:v5.5.4
   stage: build
   tags:
     - build

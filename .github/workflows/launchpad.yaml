@@ -33,7 +33,7 @@ jobs:
 
     runs-on: ubuntu-latest
     container:
-      image: espressif/idf:v5.5.2
+      image: espressif/idf:v5.5.4
     strategy:
       matrix:
         example: [voice_chat, matter_controller]
