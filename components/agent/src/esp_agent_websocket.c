@@ -327,7 +327,7 @@ end:
 /* Websocket event handler */
 void esp_agent_websocket_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data)
 {
-    ESP_LOGD(TAG, "WebSocket event: %d", event_id);
+    ESP_LOGD(TAG, "WebSocket event: %ld", event_id);
     static char *message_buffer = NULL;
     static size_t message_buffer_size = 0;
     static size_t message_buffer_capacity = 0;
@@ -424,7 +424,7 @@ void esp_agent_websocket_event_handler(void *handler_args, esp_event_base_t base
         case WEBSOCKET_EVENT_ERROR:
         case WEBSOCKET_EVENT_CLOSED:
         case WEBSOCKET_EVENT_FINISH: /* This event is emitted when websocket task stops processing */
-            ESP_LOGE(TAG, "WebSocket disconnected: %d", event_id);
+            ESP_LOGE(TAG, "WebSocket disconnected: %ld", event_id);
             agent->connected = false;
             agent->started = false;
             /* Perform handshake again on reconnect */

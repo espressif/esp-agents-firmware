@@ -116,10 +116,10 @@ static bool set_lcd_backlight(int brightness_percent)
 
     uint32_t duty = (brightness_percent * ((1 << (uint32_t)ledc_config->duty_resolution) - 1)) / 100;
     ESP_RETURN_ON_ERROR(
-        ledc_set_duty(ledc_handle->speed_mode, ledc_handle->channel, duty), false, "Set LEDC duty failed"
+        ledc_set_duty(ledc_handle->speed_mode, ledc_handle->channel, duty), TAG, "Set LEDC duty failed"
     );
     ESP_RETURN_ON_ERROR(
-        ledc_update_duty(ledc_handle->speed_mode, ledc_handle->channel), false, "Update LEDC duty failed"
+        ledc_update_duty(ledc_handle->speed_mode, ledc_handle->channel), TAG, "Update LEDC duty failed"
     );
 
     return true;
@@ -130,7 +130,7 @@ static void touch_event_callback(gfx_handle_t handle, const gfx_touch_event_t *e
 {
     ESP_LOGD(TAG, "Touch event: %s, x=%u, y=%u, track_id=%u, strength=%u",
              event->type == GFX_TOUCH_EVENT_PRESS ? "PRESS" : "RELEASE",
-             event->type, event->x, event->y, event->track_id, event->strength);
+             event->x, event->y, event->track_id, event->strength);
     if (event->type == GFX_TOUCH_EVENT_PRESS) {
         app_touch_press_on_active();
     } else {
@@ -234,7 +234,7 @@ esp_err_t app_display_set_emotion(const char *emotion)
 
 static void display_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
 {
-    ESP_LOGD(TAG, "display_event_handler: event_base: %d, event_id: %d", event_base, event_id);
+    ESP_LOGD(TAG, "display_event_handler: event_base: %s, event_id: %ld", event_base, event_id);
 
     if (event_base == APP_NETWORK_EVENT && event_id == APP_NETWORK_EVENT_QR_DISPLAY) {
         char *text = (char *)event_data;

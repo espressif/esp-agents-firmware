@@ -13,6 +13,7 @@
 #include <setup/rainmaker.h>
 #include <board_defs.h>
 #include <esp_console.h>
+#include <string.h>
 
 #include "app_audio.h"
 #include "app_agent.h"

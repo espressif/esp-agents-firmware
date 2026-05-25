@@ -49,9 +49,8 @@ static void esp_gmf_afe_event_cb(esp_gmf_obj_handle_t obj, esp_gmf_afe_evt_t *ev
 
     switch (event->type) {
     case ESP_GMF_AFE_EVT_WAKEUP_START: {
-        esp_gmf_afe_wakeup_info_t *info = event->event_data;
         recorder_event = AUDIO_RECORDER_EVENT_WAKEUP_START;
-        ESP_LOGI(TAG, "Wakeup start", info->wake_word_index, info->wakenet_model_index);
+        ESP_LOGI(TAG, "Wakeup start");
         break;
     }
     case ESP_GMF_AFE_EVT_WAKEUP_END:
