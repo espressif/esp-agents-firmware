@@ -30,7 +30,7 @@ static const char *TAG = "main";
 void app_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
 {
     /* Nothing specific to do here */
-    ESP_LOGD(TAG, "Event received: %d, event ID: %d", event_base, event_id);
+    ESP_LOGD(TAG, "Event received: %s, event ID: %ld", event_base, event_id);
 
     /* Forward the event to the common agent event handler */
     app_agent_default_event_handler(arg, event_base, event_id, event_data);
